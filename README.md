@@ -33,7 +33,7 @@ A comprehensive Flask web application that analyzes medical test reports and pro
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/AbhishekR33/BodyTune-AI.git
 cd BodyTune-AI
 ```
 

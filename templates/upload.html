@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Medical Report - BodyTune AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-upload me-2"></i>Upload Medical Report
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data">
+                        <!-- Personal Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">Personal Information</h5>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="age" class="form-label">Age *</label>
+                                <input type="number" class="form-control" id="age" name="age" min="1" max="120" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="gender" class="form-label">Gender *</label>
+                                <select class="form-select" id="gender" name="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="weight" class="form-label">Weight (kg)</label>
+                                <input type="number" class="form-control" id="weight" name="weight" min="1" max="300" step="0.1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="height" class="form-label">Height (cm)</label>
+                                <input type="number" class="form-control" id="height" name="height" min="50" max="250" step="0.1">
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- File Upload -->
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">Medical Report Upload</h5>
+                            <div class="mb-3">
+                                <label for="file" class="form-label">Select Medical Report *</label>
+                                <input type="file" class="form-control" id="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.gif" required>
+                                <div class="form-text">
+                                    Supported formats: PDF, PNG, JPG, JPEG, GIF (Max size: 16MB)
+                                </div>
+                            </div>
+                            
+                            <!-- File Upload Area -->
+                            <div class="upload-area border-2 border-dashed rounded p-4 text-center" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                                <p class="mb-2">Drag and drop your medical report here</p>
+                                <p class="text-muted small">or click the browse button above</p>
+                            </div>
+                        </div>
+
+                        <!-- Upload Instructions -->
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-info-circle me-2"></i>Upload Tips:</h6>
+                            <ul class="mb-0 small">
+                                <li>Ensure the report is clear and readable</li>
+                                <li>Include reports with blood work, cholesterol, glucose levels</li>
+                                <li>Multiple parameter reports work best</li>
+                                <li>Remove any personal information you don't want to share</li>
+                            </ul>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-chart-line me-2"></i>Analyze Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Alternative Option -->
+            <div class="text-center mt-4">
+                <p class="text-muted">Don't have a digital report?</p>
+                <a href="{{ url_for('manual_entry') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-keyboard me-2"></i>Enter Values Manually
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.upload-area {
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    background-color: #f8f9fa;
+    border-color: #007bff !important;
+}
+
+.upload-area.dragover {
+    background-color: #e3f2fd;
+    border-color: #2196f3 !important;
+}
+</style>
+
+<script>
+// File upload drag and drop functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('file');
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    // Highlight drop area when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    // Handle dropped files
+    uploadArea.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function highlight(e) {
+        uploadArea.classList.add('dragover');
+    }
+
+    function unhighlight(e) {
+        uploadArea.classList.remove('dragover');
+    }
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        fileInput.files = files;
+    }
+});
+</script>
+{% endblock %}

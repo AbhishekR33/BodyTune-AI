@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}BodyTune AI - Health Analysis Platform{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-gradient-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Optimize Your Health with AI
+                </h1>
+                <p class="lead mb-4">
+                    Upload your medical test reports and get personalized diet and workout recommendations 
+                    to achieve your ideal health parameters.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('upload_page') }}" class="btn btn-light btn-lg">
+                        <i class="fas fa-upload me-2"></i>Upload Report
+                    </a>
+                    <a href="{{ url_for('manual_entry') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-keyboard me-2"></i>Manual Entry
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-user-md display-1 text-white-50"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold">How BodyTune AI Works</h2>
+                <p class="text-muted">Simple steps to optimize your health</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-file-medical fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">1. Upload Report</h5>
+                        <p class="card-text">
+                            Upload your medical test reports in PDF or image format. 
+                            Our AI will extract all relevant health parameters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-success text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">2. AI Analysis</h5>
+                        <p class="card-text">
+                            Our advanced AI analyzes your health parameters and compares 
+                            them with ideal ranges to identify areas for improvement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-warning text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-dumbbell fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">3. Get Recommendations</h5>
+                        <p class="card-text">
+                            Receive personalized diet plans and workout routines 
+                            specifically designed to optimize your health parameters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Health Parameters Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="fw-bold">Health Parameters We Analyze</h2>
+                <p class="text-muted">Comprehensive analysis of key health indicators</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <i class="fas fa-tint text-danger fa-3x mb-3"></i>
+                    <h6>Blood Glucose</h6>
+                    <p class="small text-muted">Diabetes risk assessment</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <i class="fas fa-heart text-danger fa-3x mb-3"></i>
+                    <h6>Cholesterol Levels</h6>
+                    <p class="small text-muted">Cardiovascular health</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <i class="fas fa-heartbeat text-primary fa-3x mb-3"></i>
+                    <h6>Blood Pressure</h6>
+                    <p class="small text-muted">Hypertension monitoring</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <i class="fas fa-weight text-success fa-3x mb-3"></i>
+                    <h6>BMI & Body Fat</h6>
+                    <p class="small text-muted">Body composition analysis</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4">Ready to Optimize Your Health?</h2>
+        <p class="lead mb-4">
+            Join thousands of users who have improved their health with BodyTune AI
+        </p>
+        <a href="{{ url_for('upload_page') }}" class="btn btn-light btn-lg me-3">
+            <i class="fas fa-rocket me-2"></i>Get Started Now
+        </a>
+    </div>
+</section>
+{% endblock %}

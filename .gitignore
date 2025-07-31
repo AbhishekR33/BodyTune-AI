@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+.env
+.venv/
+venv/
+ENV/
+env/
+.ENV/
+
+# Flask
+instance/
+.webassets-cache
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+uploads/*
+!uploads/.gitkeep
+logs/
+*.log
+
+# Documentation and test files (temporary)
+ALL_ERRORS_FIXED.md
+ERROR_FIX_SUMMARY.md
+FINAL_STATUS.md
+INBODY_SCORE_IMPLEMENTATION.md
+LAUNCH_GUIDE.md
+OPTIMAL_ERROR_FIX.md
+PROJECT_SUMMARY.md
+VISIBILITY_FIXES_COMPLETE.md
+test_*.py
+debug_template.py
+verify_improvements.py
+test_improvements.bat

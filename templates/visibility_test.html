@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BodyTune AI - Text Visibility Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">BodyTune AI - Text Visibility Test</h1>
+        
+        <!-- Test Cards -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Primary Header - Should be white on blue</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Card Body Title - Should be dark text</h6>
+                        <p>This is regular paragraph text in a card body. Should be dark and readable.</p>
+                        <strong>Bold text should be visible</strong>
+                        <div class="text-muted">Muted text should be grey but readable</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h5>Light Header - Should be dark text on light background</h5>
+                    </div>
+                    <div class="card-body bg-white">
+                        <h6>White Background Content</h6>
+                        <p>All this text should be clearly visible on white background.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>List item 1</li>
+                            <li><i class="fas fa-check text-success me-2"></i>List item 2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Parameter Analysis Simulation -->
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+                <h5><i class="fas fa-chart-bar me-2"></i>Health Parameters Analysis</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">BMI</h6>
+                                <span class="badge bg-success">Optimal</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Your Value:</strong> 22.9 kg/m²
+                            </div>
+                            <div class="mb-2">
+                                <strong>Ideal Range:</strong> 18.5 - 24.9 kg/m²
+                            </div>
+                            <div class="small text-muted">
+                                Your BMI is within the healthy range.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recommendations Simulation -->
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+                <h5><i class="fas fa-utensils me-2"></i>Diet Recommendations</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <h6 class="text-success">Foods to Include</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-1"><i class="fas fa-check text-success me-2"></i>Lean proteins</li>
+                        <li class="mb-1"><i class="fas fa-check text-success me-2"></i>Whole grains</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-3">
+                    <h6 class="text-danger">Foods to Avoid</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-1"><i class="fas fa-times text-danger me-2"></i>Processed foods</li>
+                        <li class="mb-1"><i class="fas fa-times text-danger me-2"></i>Sugary drinks</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Macronutrients Test -->
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="text-center border rounded p-3">
+                    <div class="h4 text-primary">150g</div>
+                    <div class="text-muted">Protein</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center border rounded p-3">
+                    <div class="h4 text-warning">200g</div>
+                    <div class="text-muted">Carbs</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center border rounded p-3">
+                    <div class="h4 text-info">80g</div>
+                    <div class="text-muted">Fats</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-4">
+            <h6>Visibility Check:</h6>
+            <p class="mb-0">If you can read all text clearly above, the visibility fixes are working correctly!</p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
+    

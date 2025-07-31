@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block title %}Manual Entry - BodyTune AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+           document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const heightInput = document.getElementById('height');
+    const weightInput = document.getElementById('weight');
+    const bmiInput = document.getElementById('bmi');
+
+    // Form validation
+    form.addEventListener('submit', function(e) {
+        // Check if at least 2 health parameters are filled
+        const healthInputs = [
+            'glucose', 'cholesterol_total', 'cholesterol_hdl', 'cholesterol_ldl',
+            'bp_systolic', 'bp_diastolic', 'bmi', 'body_fat', 'weight',
+            'muscle_mass', 'protein', 'minerals', 'total_body_water',
+            'visceral_fat_level', 'basal_metabolic_rate', 'waist_hip_ratio', 'inbody_score'
+        ];
+        
+        let filledParams = 0;
+        healthInputs.forEach(function(inputName) {
+            const input = document.getElementsByName(inputName)[0];
+            if (input && input.value && input.value.trim() !== '') {
+                filledParams++;
+            }
+        });
+        
+        if (filledParams < 2) {
+            e.preventDefault();
+            alert('Please fill in at least 2 health parameters for analysis.');
+            return false;
+        }
+        
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Analyzing...';
+        submitBtn.disabled = true;
+    });
+
+    function calculateBMI() {
+        const height = parseFloat(heightInput.value);
+        const weight = parseFloat(weightInput.value);
+        
+        if (height && weight) {
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            bmiInput.value = bmi.toFixed(1);
+        }
+    }
+
+    heightInput.addEventListener('input', calculateBMI);
+    weightInput.addEventListener('input', calculateBMI);
+});
+</script>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-keyboard me-2"></i>Manual Parameter Entry
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {% for message in messages %}
+                                    <i class="fas fa-exclamation-triangle me-2"></i>{{ message }}
+                                    {% if not loop.last %}<br>{% endif %}
+                                {% endfor %}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Instructions:</strong> Fill in as many parameters as you have from your health report. 
+                        You need at least 2 parameters for analysis. Required fields are marked with *.
+                    </div>
+                    
+                    <form action="{{ url_for('analyze_manual') }}" method="POST">
+                        <!-- Personal Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-success mb-3">Personal Information</h5>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="age" class="form-label">Age *</label>
+                                <input type="number" class="form-control" id="age" name="age" min="1" max="120" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="gender" class="form-label">Gender *</label>
+                                <select class="form-select" id="gender" name="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="activity_level" class="form-label">Activity Level</label>
+                                <select class="form-select" id="activity_level" name="activity_level">
+                                    <option value="sedentary">Sedentary (little/no exercise)</option>
+                                    <option value="light">Light (light exercise 1-3 days/week)</option>
+                                    <option value="moderate" selected>Moderate (moderate exercise 3-5 days/week)</option>
+                                    <option value="active">Active (hard exercise 6-7 days/week)</option>
+                                    <option value="very_active">Very Active (very hard exercise/physical job)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="weight" class="form-label">Weight (kg) *</label>
+                                <input type="number" class="form-control" id="weight" name="weight" min="1" max="300" step="0.1" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="height" class="form-label">Height (cm) *</label>
+                                <input type="number" class="form-control" id="height" name="height" min="50" max="250" step="0.1" required>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Health Parameters -->
+                        <div class="mb-4">
+                            <h5 class="text-success mb-3">Health Parameters</h5>
+                            <p class="text-muted small mb-4">Enter the values from your medical test results. Leave blank if not available.</p>
+                            
+                            <div class="row">
+                                <!-- Blood Parameters -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="glucose" class="form-label">
+                                        <i class="fas fa-tint text-danger me-1"></i>
+                                        Blood Glucose (mg/dL)
+                                    </label>
+                                    <input type="number" class="form-control" id="glucose" name="glucose" min="0" step="0.1" placeholder="e.g., 95">
+                                    <div class="form-text">Normal range: 70-100 mg/dL</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="cholesterol_total" class="form-label">
+                                        <i class="fas fa-heart text-danger me-1"></i>
+                                        Total Cholesterol (mg/dL)
+                                    </label>
+                                    <input type="number" class="form-control" id="cholesterol_total" name="cholesterol_total" min="0" step="0.1" placeholder="e.g., 180">
+                                    <div class="form-text">Ideal: < 200 mg/dL</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="cholesterol_hdl" class="form-label">
+                                        <i class="fas fa-heart text-success me-1"></i>
+                                        HDL Cholesterol (mg/dL)
+                                    </label>
+                                    <input type="number" class="form-control" id="cholesterol_hdl" name="cholesterol_hdl" min="0" step="0.1" placeholder="e.g., 45">
+                                    <div class="form-text">Ideal: > 40 mg/dL (men), > 50 mg/dL (women)</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="cholesterol_ldl" class="form-label">
+                                        <i class="fas fa-heart text-warning me-1"></i>
+                                        LDL Cholesterol (mg/dL)
+                                    </label>
+                                    <input type="number" class="form-control" id="cholesterol_ldl" name="cholesterol_ldl" min="0" step="0.1" placeholder="e.g., 110">
+                                    <div class="form-text">Ideal: < 100 mg/dL</div>
+                                </div>
+
+                                <!-- Blood Pressure -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="bp_systolic" class="form-label">
+                                        <i class="fas fa-heartbeat text-primary me-1"></i>
+                                        Systolic BP (mmHg)
+                                    </label>
+                                    <input type="number" class="form-control" id="bp_systolic" name="bp_systolic" min="0" step="1" placeholder="e.g., 120">
+                                    <div class="form-text">Normal: 90-120 mmHg</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="bp_diastolic" class="form-label">
+                                        <i class="fas fa-heartbeat text-primary me-1"></i>
+                                        Diastolic BP (mmHg)
+                                    </label>
+                                    <input type="number" class="form-control" id="bp_diastolic" name="bp_diastolic" min="0" step="1" placeholder="e.g., 80">
+                                    <div class="form-text">Normal: 60-80 mmHg</div>
+                                </div>
+
+                                <!-- Body Composition -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="bmi" class="form-label">
+                                        <i class="fas fa-weight text-info me-1"></i>
+                                        BMI (kg/m²)
+                                    </label>
+                                    <input type="number" class="form-control" id="bmi" name="bmi" min="0" step="0.1" placeholder="Auto-calculated">
+                                    <div class="form-text">Will be calculated from height/weight</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="body_fat" class="form-label">
+                                        <i class="fas fa-percentage text-success me-1"></i>
+                                        Body Fat Percentage (%)
+                                    </label>
+                                    <input type="number" class="form-control" id="body_fat" name="body_fat" min="0" max="50" step="0.1" placeholder="e.g., 16">
+                                    <div class="form-text">Healthy range varies by gender and age</div>
+                                </div>
+
+                                <!-- InBody Specific Parameters -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="muscle_mass" class="form-label">
+                                        <i class="fas fa-dumbbell text-primary me-1"></i>
+                                        Muscle Mass (kg)
+                                    </label>
+                                    <input type="number" class="form-control" id="muscle_mass" name="muscle_mass" min="0" step="0.1" placeholder="e.g., 32.6">
+                                    <div class="form-text">Skeletal muscle mass</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="protein" class="form-label">
+                                        <i class="fas fa-fish text-info me-1"></i>
+                                        Protein (kg)
+                                    </label>
+                                    <input type="number" class="form-control" id="protein" name="protein" min="0" step="0.1" placeholder="e.g., 5.9">
+                                    <div class="form-text">Total body protein</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="minerals" class="form-label">
+                                        <i class="fas fa-mountain text-secondary me-1"></i>
+                                        Minerals (kg)
+                                    </label>
+                                    <input type="number" class="form-control" id="minerals" name="minerals" min="0" step="0.1" placeholder="e.g., 2.37">
+                                    <div class="form-text">Bone mineral content</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="total_body_water" class="form-label">
+                                        <i class="fas fa-tint text-primary me-1"></i>
+                                        Total Body Water (L)
+                                    </label>
+                                    <input type="number" class="form-control" id="total_body_water" name="total_body_water" min="0" step="0.1" placeholder="e.g., 22.7">
+                                    <div class="form-text">Total body water content</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="visceral_fat_level" class="form-label">
+                                        <i class="fas fa-exclamation-triangle text-warning me-1"></i>
+                                        Visceral Fat Level
+                                    </label>
+                                    <input type="number" class="form-control" id="visceral_fat_level" name="visceral_fat_level" min="1" max="20" step="1" placeholder="e.g., 7">
+                                    <div class="form-text">Normal range: 1-9</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="basal_metabolic_rate" class="form-label">
+                                        <i class="fas fa-fire text-danger me-1"></i>
+                                        BMR (kcal)
+                                    </label>
+                                    <input type="number" class="form-control" id="basal_metabolic_rate" name="basal_metabolic_rate" min="800" max="3000" step="1" placeholder="e.g., 1040">
+                                    <div class="form-text">Basal Metabolic Rate</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="waist_hip_ratio" class="form-label">
+                                        <i class="fas fa-ruler text-info me-1"></i>
+                                        Waist-Hip Ratio
+                                    </label>
+                                    <input type="number" class="form-control" id="waist_hip_ratio" name="waist_hip_ratio" min="0.5" max="1.5" step="0.01" placeholder="e.g., 0.86">
+                                    <div class="form-text">Waist circumference ÷ Hip circumference</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="inbody_score" class="form-label">
+                                        <i class="fas fa-star text-warning me-1"></i>
+                                        InBody Score
+                                    </label>
+                                    <input type="number" class="form-control" id="inbody_score" name="inbody_score" min="0" max="100" step="1" placeholder="e.g., 68">
+                                    <div class="form-text">Overall body composition score (0-100)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Information Box -->
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-lightbulb me-2"></i>Tips for Accurate Results:</h6>
+                            <ul class="mb-0 small">
+                                <li>Use your most recent test results</li>
+                                <li>Ensure values are from fasting tests when applicable</li>
+                                <li>Double-check units (mg/dL vs mmol/L)</li>
+                                <li>Include as many parameters as possible for better recommendations</li>
+                            </ul>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-chart-line me-2"></i>Analyze Health Parameters
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Alternative Option -->
+            <div class="text-center mt-4">
+                <p class="text-muted">Have a digital report instead?</p>
+                <a href="{{ url_for('upload_page') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-upload me-2"></i>Upload Report
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-calculate BMI when height and weight are entered
+document.addEventListener('DOMContentLoaded', function() {
+    const heightInput = document.getElementById('height');
+    const weightInput = document.getElementById('weight');
+    const bmiInput = document.getElementById('bmi');
+
+    function calculateBMI() {
+        const height = parseFloat(heightInput.value);
+        const weight = parseFloat(weightInput.value);
+        
+        if (height && weight) {
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            bmiInput.value = bmi.toFixed(1);
+        }
+    }
+
+    heightInput.addEventListener('input', calculateBMI);
+    weightInput.addEventListener('input', calculateBMI);
+});
+</script>
+{% endblock %}
